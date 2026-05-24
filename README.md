@@ -42,7 +42,7 @@ Qwen3 4B (Alibaba)
 ### 1. Iniciar tudo (recomendado)
 
 ```bash
-cd C:\Users\eurico\Documents\adon-ia-project
+cd C:\Users\seu-usuario\Documents\adon-ia-project
 .\run.ps1          # PowerShell
 # ou
 python run.py      # Python
@@ -58,7 +58,7 @@ Pressione **ESC** para parar todos os processos.
 ollama serve
 
 # Terminal 2 — WebUI
-cd C:\Users\eurico\Documents\adon-ia-project
+cd C:\Users\seu-usuario\Documents\adon-ia-project
 python app.py
 ```
 

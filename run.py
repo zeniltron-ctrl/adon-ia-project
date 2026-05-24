@@ -1,6 +1,7 @@
 import subprocess, sys, os, time, urllib.request
 
 PROJECT = os.path.dirname(os.path.abspath(__file__))
+# Troque "eurico" pelo seu usuário do Windows
 OLLAMA = r'C:\Users\eurico\AppData\Local\Programs\Ollama\ollama app.exe'
 procs = []
 
