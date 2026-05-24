@@ -4,6 +4,7 @@ Write-Host "└─────────────────────�
 Write-Host ""
 
 $ollama = $null
+# Troque "eurico" pelo seu usuário do Windows
 $ollamaPath = "C:\Users\eurico\AppData\Local\Programs\Ollama\ollama app.exe"
 
 try {
