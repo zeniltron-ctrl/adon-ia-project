@@ -3,14 +3,14 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 OLLAMA = os.environ.get('OLLAMA_HOST', 'http://127.0.0.1:11434')
-MODEL = 'adon-ia'
+MODEL = 'qwen3.5:4b'
 
 def _req(method, path, data=None):
     url = f'{OLLAMA}{path}'
     body = json.dumps(data).encode() if data else None
     r = urllib.request.Request(url, data=body, method=method)
     r.add_header('Content-Type', 'application/json')
-    resp = urllib.request.urlopen(r, timeout=180 if path == '/api/chat' else 5)
+    resp = urllib.request.urlopen(r, timeout=600 if path == '/api/chat' else 5)
     return json.loads(resp.read().decode())
 
 @app.route('/')
@@ -24,7 +24,7 @@ def chat():
         data = _req('POST', '/api/chat', {
             'model': MODEL,
             'messages': [
-                {'role': 'system', 'content': 'Seu nome é Adon-ia. Você é um assistente de IA baseado no Qwen3. Responda sempre em português de forma útil e educada.'},
+                {'role': 'system', 'content': 'Seu nome é Adon-ia. Você é um assistente de IA baseado no Qwen3.5. Responda sempre em português de forma útil e educada.'},
                 {'role': 'user', 'content': msg}
             ],
             'stream': False

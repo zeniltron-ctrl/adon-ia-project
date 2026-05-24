@@ -1,7 +1,3 @@
+
 __pycache__/
-*.py[cod]
-*.pyo
-*.log
-.env
-venv/
-.venv/
+*.pyc

@@ -1,17 +1,27 @@
 # Adon-ia
 
-**Adon-ia** é uma interface web minimalista para interagir com modelos de linguagem (LLMs) localmente via [Ollama](https://ollama.ai). Foi construído a partir do modelo **Qwen3 4B** (da família Qwen, da Alibaba), renomeado como `adon-ia` no Ollama.
+**Adon-ia** é uma interface web minimalista para interagir com modelos de linguagem (LLMs) localmente via [Ollama](https://ollama.ai). Utiliza o modelo **Qwen3.5 4B** (da Alibaba) servido via Ollama.
 
 > ⚠️ **Aviso:** Esta é uma versão de estudos de IA. Não foi desenvolvida para produção, mas pode ser adaptada para pequenos projetos que utilizam LLMs locais.
+
+---
+
+## Desempenho com GPU
+
+O projeto foi testado com sucesso utilizando uma **NVIDIA GeForce RTX 3060 Ti (8 GB VRAM)** em duas configurações de máquina:
+
+- **Ryzen 9 5950X** — inferência rápida com o modelo carregando inteiramente na VRAM
+- **Dual Xeon E5-2680 v4 (X99, placa MD8)** — mesmo desempenho de GPU, dependendo apenas do barramento PCIe
+
+A RTX 3060 Ti (Compute Capability 8.6, 8 GB) consegue rodar o **Qwen3.5 4B (~3.4 GB)** inteiro em VRAM, entregando **tokens por segundo muito superiores** à execução em CPU.
 
 ---
 
 ## Como foi construído
 
 ```
-Qwen3 4B (Alibaba)
-    → baixado via Ollama (ollama pull qwen3:4b)
-    → renomeado para adon-ia (ollama cp qwen3:4b adon-ia)
+Qwen3.5 4B (Alibaba)
+    → baixado via Ollama (ollama pull qwen3.5:4b)
     → servido localmente via API do Ollama (porta 11434)
     → interface web própria (Flask, porta 12800)
 ```
@@ -20,7 +30,7 @@ Qwen3 4B (Alibaba)
 
 | Componente | Tecnologia |
 |-----------|-----------|
-| Modelo | Qwen3 4B (Ollama) |
+| Modelo | Qwen3.5 4B (Ollama) |
 | Servidor da API | Ollama |
 | Backend web | Python + Flask |
 | Frontend | HTML + CSS + JavaScript (sem dependências) |

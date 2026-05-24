@@ -1,18 +1,17 @@
-Write-Host "┌────────────────────────┐" -ForegroundColor Cyan
-Write-Host "│      Adon-ia LLM      │" -ForegroundColor Cyan
-Write-Host "└────────────────────────┘" -ForegroundColor Cyan
+Write-Host "+------------------------+" -ForegroundColor Cyan
+Write-Host "|      Adon-ia LLM      |" -ForegroundColor Cyan
+Write-Host "+------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 $ollama = $null
-# Troque "eurico" pelo seu usuário do Windows
-$ollamaPath = "C:\Users\eurico\AppData\Local\Programs\Ollama\ollama app.exe"
+$ollamaPath = "C:\Users\informatica\AppData\Local\Programs\Ollama\ollama.exe"
 
 try {
   $null = Invoke-WebRequest -Uri 'http://127.0.0.1:11434/api/tags' -UseBasicParsing -TimeoutSec 2
   Write-Host "  Ollama ja esta rodando." -ForegroundColor Green
 } catch {
   Write-Host "  Iniciando Ollama em 2o plano..." -ForegroundColor Yellow
-  $ollama = Start-Process -FilePath $ollamaPath -WindowStyle Hidden -PassThru
+  $ollama = Start-Process -FilePath $ollamaPath -ArgumentList "serve" -WindowStyle Hidden -PassThru
   $i = 0
   while ($i -lt 15) {
     Start-Sleep -Seconds 1
@@ -43,5 +42,17 @@ while ($true) {
 
 Write-Host "  Parando..." -ForegroundColor Yellow
 if (-not $webui.HasExited) { $webui.Kill() }
-if ($ollama -and -not $ollama.HasExited) { $ollama.Kill() }
+Get-Process ollama -ErrorAction SilentlyContinue | Stop-Process -Force
+Start-Sleep -Seconds 2
+
+foreach ($port in @(11434, 12800)) {
+  try {
+    $null = Invoke-WebRequest -Uri "http://127.0.0.1:$port/" -UseBasicParsing -TimeoutSec 1
+    $name = if ($port -eq 11434) { "Ollama" } else { "Flask" }
+    Write-Host "  $name: ainda rodando" -ForegroundColor Red
+  } catch {
+    $name = if ($port -eq 11434) { "Ollama" } else { "Flask" }
+    Write-Host "  $name: parado" -ForegroundColor Green
+  }
+}
 Write-Host "  Processos encerrados." -ForegroundColor Green
